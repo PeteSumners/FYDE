@@ -11,12 +11,14 @@ decode_results results;
  
 void setup()
 {
+  // IRRecvDemo Stuff
   Serial.begin(9600);
   irrecv.enableIRIn(); //初始化红外遥控
   pinMode(13,1);
 }
  
 void loop() {
+  // IRRecvDemo Stuff
   if (irrecv.decode(&results)) {
 if(results.value==16753245)      //确认接收到的第一排按键1的编码，此码是预先读出来的按键编码。
   {
