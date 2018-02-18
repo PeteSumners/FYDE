@@ -82,22 +82,28 @@ void ChangeColor(void)
 {
 	// read CurrentColor, output to LED array
   SYSCTL_RCGCGPIO_R |= 0x10;
+  __asm{
+    NOP
+    NOP
+  }
   GPIO_PORTE_DIR_R |= 0x07;
-  GPIO_PORTB_DEN_R |= 0x07;
+  GPIO_PORTE_DEN_R |= 0x07;
   
-  int portEData = GPIO_PORTE_DATA_R;
+  uint32_t portEData = GPIO_PORTE_DATA_R;
   portEData &= 0xF8;
   if(CurrentColor == red){
     portEData&= 0xF9;
     portEData|= 0x01;
   }
-  if(CurrentColor == green){
+  else if(CurrentColor == green){
     portEData&= 0xFA;
     portEData|= 0x02;
   } 
-  if(CurrentColor == blue)
+  else{
     portEData&= 0xFC;
     portEData|= 0x04;
+  }
+  GPIO_PORTE_DATA_R = portEData;
 }
 
 int main(void){
