@@ -65,17 +65,14 @@ void UserTask(int period){
 int checkPeriod(int period)
 {
 	// return "red", "green", or "blue
-	if(period > 40000){
-    if(period < 100000)
+	if(period > 40000 && period < 100000){
       return blue;
   }
-  else if(period > 100000){
-    if(period < 400000)
+  else if(period > 100000 && period < 400000){
       return green;
   }  
-  else if(period > 400000)
+  else
       return red; 
-  return 0;
 }
 
 void ChangeColor(void)
