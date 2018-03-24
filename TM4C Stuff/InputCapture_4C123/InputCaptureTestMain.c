@@ -63,7 +63,9 @@ void UserTask(int period){
 int checkPeriod(int period)
 {
 	// return "red", "green", or "blue
-	
+	// If frequency == 100Hz, return red.
+  // If frequency == 500Hz, return blue.
+  // If frequency == 1000Hz, return green.
 	return red;
 }
 
