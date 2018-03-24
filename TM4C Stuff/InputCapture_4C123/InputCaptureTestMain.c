@@ -46,6 +46,7 @@ void UserTask(int period){
   //use the period to do something
 	//IMPORTANT: You are in an interrupt handle. 
 	//Keep the processing here short and sweet
+
 	switch(checkPeriod(period))
 	{
 		case red:
@@ -58,20 +59,55 @@ void UserTask(int period){
 			CurrentColor = blue;
 			break;
 	}
+  
 }
 
 int checkPeriod(int period)
 {
 	// return "red", "green", or "blue
+<<<<<<< HEAD
 	// If frequency == 100Hz, return red.
   // If frequency == 500Hz, return blue.
   // If frequency == 1000Hz, return green.
 	return red;
+=======
+	if(period > 40000 && period < 100000){
+      return blue;
+  }
+  else if(period > 100000 && period < 400000){
+      return green;
+  }  
+  else
+      return red; 
+>>>>>>> 4c1f5906a8fb622d1ddfcde1f4495a0d9c20f57b
 }
 
 void ChangeColor(void)
 {
 	// read CurrentColor, output to LED array
+  SYSCTL_RCGCGPIO_R |= 0x10;
+  __asm{
+    NOP
+    NOP
+  }
+  GPIO_PORTE_DIR_R |= 0x07;
+  GPIO_PORTE_DEN_R |= 0x07;
+  
+  uint32_t portEData = GPIO_PORTE_DATA_R;
+  portEData &= 0xF8;
+  if(CurrentColor == red){
+    portEData&= 0xF9;
+    portEData|= 0x01;
+  }
+  else if(CurrentColor == green){
+    portEData&= 0xFA;
+    portEData|= 0x02;
+  } 
+  else{
+    portEData&= 0xFC;
+    portEData|= 0x04;
+  }
+  GPIO_PORTE_DATA_R = portEData;
 }
 
 int main(void){
